@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pitstop/components/appbar.dart';
-import 'package:pitstop/components/drawer.dart';
 import 'package:pitstop/services/auth.service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -68,8 +66,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Profil'),
-      drawer: const CustomDrawer(),
       body: FutureBuilder(
         future: _authService.getCurrentUser(),
         builder: (context, snapshot) {
@@ -90,16 +86,24 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 // Informații cont
                 Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    side: BorderSide(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      width: 1,
+                    ),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Informații cont',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSurface,  // culoare adaptată la temă
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -121,8 +125,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
                 const SizedBox(height: 24),
 
-                // Formular schimbare parolă
                 Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    side: BorderSide(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      width: 1,
+                    ),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Form(
@@ -169,6 +179,13 @@ class _ProfilePageState extends State<ProfilePage> {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: _isLoading ? null : _changePassword,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Theme.of(context).cardColor,
+                                side: BorderSide(
+                                  color: Theme.of(context).colorScheme.onSurface,
+                                  width: 1,
+                                ),
+                              ),
                               child: _isLoading
                                   ? const SizedBox(
                                       height: 20,
@@ -211,20 +228,25 @@ class InfoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 20, color: Colors.blue),
+        Icon(
+          icon, 
+          size: 20, 
+          color: Theme.of(context).colorScheme.primary,
+        ),
         const SizedBox(width: 8),
         Text(
           '$label:',
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w500,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         const SizedBox(width: 8),
         Expanded(
           child: Text(
             value,
-            style: const TextStyle(
-              color: Colors.black87,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
         ),
@@ -233,7 +255,6 @@ class InfoRow extends StatelessWidget {
   }
 }
 
-// Widget helper pentru câmpurile de parolă
 class PasswordField extends StatelessWidget {
   final TextEditingController controller;
   final String label;

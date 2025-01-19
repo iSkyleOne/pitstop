@@ -91,6 +91,13 @@ class CustomDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.car_rental),
+            title: const Text('Masinile mele'),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, '/cars');
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Deconectare'),
             onTap: () async {

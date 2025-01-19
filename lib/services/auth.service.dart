@@ -64,7 +64,6 @@ class AuthService {
 
   // Returnează userul curent
   Future<User?> getCurrentUser() async {
-    print(FirebaseAuth.instance.currentUser);
     return FirebaseAuth.instance.currentUser;
   }
 }

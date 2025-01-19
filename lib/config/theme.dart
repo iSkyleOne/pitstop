@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
-      useMaterial3: true,
       brightness: Brightness.light,
+      useMaterial3: true,
       visualDensity: VisualDensity.compact,
       
       // Culori de bază
@@ -175,8 +175,8 @@ class AppTheme {
 
   static ThemeData get darkTheme {
     return ThemeData(
-      useMaterial3: true,
       brightness: Brightness.dark,
+      useMaterial3: true,
       visualDensity: VisualDensity.compact,
       
       // Culori de bază
