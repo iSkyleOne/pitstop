@@ -93,7 +93,7 @@ Pentru întrebări și suport, vă rugăm să deschideți o issue în repository
 ## Screenshots
 ![Login Screen](screenshots/login.jpg)
 ![Dashboard Screen](screenshots/dashboard.jpg)
-![Vehicle List](screenshots/cars.png)
+![Vehicle List](screenshots/cars.jpg)
 
 ## Dezvoltare Viitoare
 - [ ] Scanare documente cu OCR
