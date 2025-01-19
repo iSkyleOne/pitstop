@@ -11,23 +11,20 @@ import 'package:pitstop/screens/profile/profile_screen.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    // Verifică dacă userul e logat
-    final bool isLoggedIn = FirebaseAuth.instance.currentUser != null; // sau metoda ta de verificare
+    final bool isLoggedIn = FirebaseAuth.instance.currentUser != null; 
 
     if (!isLoggedIn && settings.name != '/login' && settings.name != '/register') {
       return MaterialPageRoute(
-        builder: (_) => const LoginScreen(), // sau pagina ta de login
+        builder: (_) => const LoginScreen(), 
       );
     }
 
-    // Previne accesarea login/register când userul e logat
     if (isLoggedIn && (settings.name == '/login' || settings.name == '/register')) {
       return MaterialPageRoute(
-        builder: (_) => const MainLayout(title: 'PitStop', child: MyHomePage()), // sau pagina ta principală
+        builder: (_) => const MainLayout(title: 'PitStop', child: MyHomePage()), 
       );
     }
 
-    // Handle-ul normal pentru rute
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => const MainLayout(title: 'PitStop', child: MyHomePage()));

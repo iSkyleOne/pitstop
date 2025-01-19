@@ -31,7 +31,6 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() => _isLoading = true);
 
     try {
-      // Reautentificare folosind parola curentă
       final user = FirebaseAuth.instance.currentUser;
       final credential = EmailAuthProvider.credential(
         email: user!.email!,
@@ -39,7 +38,6 @@ class _ProfilePageState extends State<ProfilePage> {
       );
       await user.reauthenticateWithCredential(credential);
 
-      // Schimbarea parolei
       await user.updatePassword(_newPasswordController.text);
 
       if (mounted) {
@@ -84,7 +82,6 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Informații cont
                 Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4),
@@ -103,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onSurface,  // culoare adaptată la temă
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -211,7 +208,6 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-// Widget helper pentru afișarea informațiilor
 class InfoRow extends StatelessWidget {
   final IconData icon;
   final String label;

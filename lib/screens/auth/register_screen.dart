@@ -26,7 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       context: context
     );
 
-    if (!mounted) return;  // Verificare important pentru safety
+    if (!mounted) return; 
 
     if (user != null) {
       Navigator.pushReplacementNamed(context, '/home');
@@ -78,7 +78,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 32),
-                // Name field
                 TextFormField(
                   controller: _displayName,
                   decoration: const InputDecoration(
@@ -95,7 +94,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                // Email field
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -116,7 +114,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                // Password field
                 TextFormField(
                   controller: _passwordController,
                   obscureText: _obscurePassword,
@@ -147,7 +144,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                // Confirm password field
                 TextFormField(
                   controller: _confirmPasswordController,
                   obscureText: _obscureConfirmPassword,
@@ -178,15 +174,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                // Register button
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      // // Aici vom implementa logica de înregistrare
-                      // print('Name: ${_displayName.text}');
-                      // print('Email: ${_emailController.text}');
-                      // print('Password: ${_passwordController.text}');
-
                       register();
                     }
                   },

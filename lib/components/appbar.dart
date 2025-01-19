@@ -15,7 +15,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    // În loc să verificăm Theme.of(context).brightness, verificăm direct themeMode
     final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
     print('Current theme mode from provider: ${themeProvider.themeMode}');
 

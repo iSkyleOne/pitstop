@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
       context
     );
 
-    if (!mounted) return;  // Verificare important pentru safety
+    if (!mounted) return; 
 
     if (user != null) {
       Navigator.pushNamed(context, '/home');
@@ -54,7 +54,6 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Logo sau titlu
                 const Icon(
                   Icons.car_repair,
                   size: 100,
@@ -79,7 +78,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 32),
                 
-                // Email field
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -100,7 +98,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 16),
                 
-                // Password field
                 TextFormField(
                   controller: _passwordController,
                   obscureText: _obscurePassword,
@@ -131,7 +128,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 24),
                 
-                // Login button
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {

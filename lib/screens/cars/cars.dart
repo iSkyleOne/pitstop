@@ -1,4 +1,3 @@
-// pages/cars_page.dart
 import 'package:flutter/material.dart';
 import 'package:pitstop/models/car.dart';
 import 'package:pitstop/screens/cars/car_card.dart';

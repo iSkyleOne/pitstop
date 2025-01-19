@@ -53,7 +53,6 @@ class CarCard extends StatelessWidget {
                         arguments: car,
                       );
                     } else if (value == 'delete') {
-                      // Implementează ștergerea
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(

@@ -1,4 +1,3 @@
-// pages/add_edit_car_page.dart
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pitstop/models/car.dart';
@@ -100,7 +99,6 @@ class _AddEditCarPageState extends State<AddEditCarPage> {
       }
     } catch (e) {
       // ignore: use_build_context_synchronously
-      print(e);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('A apărut o eroare!'),
@@ -253,7 +251,6 @@ class _AddEditCarPageState extends State<AddEditCarPage> {
                 },
               ),
               const SizedBox(height: 16),
-              // Adaugă restul câmpurilor în mod similar
               
               Align(
                 alignment: Alignment.centerRight,
