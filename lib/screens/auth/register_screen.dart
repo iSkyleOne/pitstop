@@ -191,11 +191,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                  ),
+                      backgroundColor: Theme.of(context).cardColor,
+                      side: BorderSide(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        width: 0.4,
+                      ),
+                    ),
                   child: const Text(
-                    'Înregistrare',
-                    style: TextStyle(fontSize: 16),
+                    'Inregistrare',
+                    
                   ),
                 ),
                 const SizedBox(height: 16),

@@ -139,7 +139,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    backgroundColor: Theme.of(context).cardColor,
+                    side: BorderSide(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      width: 1,
+                    ),
                   ),
                   child: const Text(
                     'Autentificare',
@@ -152,7 +156,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     Navigator.pushNamed(context, '/register');
                   },
-                  child: const Text('Nu ai cont? Înregistrează-te'),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).cardColor,
+                      side: BorderSide(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        width: 0.4,
+                      ),
+                    ),
+                  child: const Text('Inregistrare'),
                 ),
               ],
             ),

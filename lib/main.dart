@@ -81,7 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
           return Column(
             children: [
-              CarStatsWidget(cars: cars),
+              if (!cars.isNotEmpty) const Center(child: Text('Nu ai nicio masina adaugata')),
+              if (cars.isNotEmpty) CarStatsWidget(cars: cars),
               SizedBox(
                 width: double.infinity,
                 child: Padding(
@@ -97,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: 1,
                       ),
                     ),
-                    child: const Text('Vezi toate masinile'),
+                    child:  Text(cars.isNotEmpty ? 'Vezi masinile tale' : 'Adauga masina'),
                   ),
                 ),
               )
