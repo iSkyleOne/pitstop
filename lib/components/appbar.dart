@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showBackButton;
-  
+
   const CustomAppBar({
     super.key,
     required this.title,
@@ -18,7 +18,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
     print('Current theme mode from provider: ${themeProvider.themeMode}');
 
-    
     return AppBar(
       title: Text(title),
       backgroundColor: Theme.of(context).colorScheme.primary,

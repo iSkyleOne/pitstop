@@ -1,5 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pitstop/config/router.dart';
 import 'package:pitstop/services/auth.service.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -7,20 +7,19 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authService = AuthService();
 
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          DrawerHeader(
-            decoration: const BoxDecoration(
+          const DrawerHeader(
+            decoration: BoxDecoration(
               color: Colors.blue,
             ),
             child: Wrap(
               direction: Axis.vertical,
               children: [
-                const Wrap(
+                Wrap(
                   direction: Axis.horizontal,
                   children: [
                     Icon(
@@ -38,41 +37,41 @@ class CustomDrawer extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Text(
+                Text(
                   'Meniu',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 22,
                   ),
                 ),
-                const Text(
+                Text(
                   'Bine ai revenit,',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                   ),
                 ),
-                FutureBuilder<User?>(
-                  future: authService.getCurrentUser(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData && snapshot.data != null) {
-                      return Text(
-                        snapshot.data!.displayName ?? 'Utilizator',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                        ),
-                      );
-                    }
-                    return const Text(
-                      'Utilizator',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    );
-                  },
-                ),
+                // FutureBuilder<String>(
+                //   future: authService.getCurrentUser(),
+                //   builder: (context, snapshot) {
+                //     if (snapshot.hasData && snapshot.data != null) {
+                //       return Text(
+                //         snapshot.data!.displayName ?? 'Utilizator',
+                //         style: const TextStyle(
+                //           color: Colors.white,
+                //           fontSize: 16,
+                //         ),
+                //       );
+                //     }
+                //     return const Text(
+                //       'Utilizator',
+                //       style: TextStyle(
+                //         color: Colors.white,
+                //         fontSize: 16,
+                //       ),
+                //     );
+                //   },
+                // ),
               ],
             )
           ),
@@ -102,7 +101,8 @@ class CustomDrawer extends StatelessWidget {
             title: const Text('Deconectare'),
             onTap: () async {
               final authService = AuthService();
-              await authService.signOut(context);
+              await authService.logout();
+              AppRouter.navigateAndClearStack(context, '/login');
             },
           ),
         ],

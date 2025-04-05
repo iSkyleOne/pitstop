@@ -6,7 +6,7 @@ class MainLayout extends StatelessWidget {
   final Widget child;
   final String title;
   final bool showBackButton;
-  
+
   const MainLayout({
     super.key,
     required this.title,

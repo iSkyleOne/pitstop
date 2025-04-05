@@ -6,14 +6,14 @@ class AppTheme {
       brightness: Brightness.light,
       useMaterial3: true,
       visualDensity: VisualDensity.compact,
-      
+
       // Culori de bază
       primaryColor: const Color(0xff36618e),
       canvasColor: const Color(0xfff8f9ff),
       scaffoldBackgroundColor: const Color(0xfff8f9ff),
       cardColor: const Color(0xfff8f9ff),
       dialogBackgroundColor: const Color(0xfff8f9ff),
-      
+
       // Color Scheme
       colorScheme: const ColorScheme(
         brightness: Brightness.light,
@@ -178,14 +178,14 @@ class AppTheme {
       brightness: Brightness.dark,
       useMaterial3: true,
       visualDensity: VisualDensity.compact,
-      
+
       // Culori de bază
       primaryColor: const Color(0xff111418),
       canvasColor: const Color(0xff111418),
       scaffoldBackgroundColor: const Color(0xff111418),
       cardColor: const Color(0xff111418),
       dialogBackgroundColor: const Color(0xff111418),
-      
+
       // Color Scheme
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
@@ -328,7 +328,7 @@ class AppTheme {
           color: Color(0xffe1e2e8),
         ),
       ),
-      
+
       // Alte proprietăți
       disabledColor: const Color(0x62ffffff),
       dividerColor: const Color(0x1fe1e2e8),

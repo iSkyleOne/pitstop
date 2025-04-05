@@ -1,24 +1,18 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:pitstop/config/firebase.dart';
-import 'package:pitstop/models/car.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pitstop/providers/theme_provider.dart';
-import 'package:pitstop/screens/cars/cars_stats_widget.dart';
-import 'package:pitstop/services/car.service.dart';
-import 'config/theme.dart';
-import 'config/router.dart';
+import 'package:pitstop/services/api_client.dart';
+import 'package:pitstop/services/auth.service.dart';
 import 'package:provider/provider.dart';
+
+import 'config/router.dart';
+import 'config/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (kIsWeb) {
-    await Firebase.initializeApp(options: FirebaseConfig.options);
-  } else {
-    Firebase.initializeApp();
-  }
-
+  await dotenv.load(fileName: '.env');
+  ApiClient.setup();
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
@@ -58,52 +52,37 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final CarService carService = CarService();
 
     return Scaffold(
-      body: StreamBuilder<List<Car>>(
-        stream: carService.getCars(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Center(
-              child: Text('A aparut o eroare!'),
-            );
-          }
+      appBar: AppBar(
+        title: const Text('Pitstop'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushNamed(context, '/settings');
+            },
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Statistici',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            IconButton(onPressed: () async {
+              final AuthService authService = AuthService();
+              var user = await authService.getCurrentUser();
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          final cars = snapshot.data ?? [];
-
-          return Column(
-            children: [
-              if (!cars.isNotEmpty) const Center(child: Text('Nu ai nicio masina adaugata')),
-              if (cars.isNotEmpty) CarStatsWidget(cars: cars),
-              SizedBox(
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/cars');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).cardColor,
-                      side: BorderSide(
-                        color: Theme.of(context).colorScheme.onSurface,
-                        width: 1,
-                      ),
-                    ),
-                    child:  Text(cars.isNotEmpty ? 'Vezi masinile tale' : 'Adauga masina'),
-                  ),
-                ),
-              )
-            ],
-          );
-        },
+              print(user);
+            }, icon: const Icon((Icons.info)))
+          ],
+        ),
       ),
     );
   }

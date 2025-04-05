@@ -1,39 +1,24 @@
+// screens/auth/login_screen.dart
 import 'package:flutter/material.dart';
+import 'package:pitstop/components/inputs/password-input.dart';
+import 'package:pitstop/components/inputs/text-input.dart';
+import 'package:pitstop/config/router.dart';
+import 'package:pitstop/screens/auth/register_screen.dart';
 import 'package:pitstop/services/auth.service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
-  
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _obscurePassword = true;
-
-  Future<void> login() async {
-    final user = await _authService.signIn(
-      _emailController.text,
-      _passwordController.text,
-      context
-    );
-
-    if (!mounted) return; 
-
-    if (user != null) {
-      Navigator.pushNamed(context, '/home');
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Email sau parolă greșită!'),
-        ),
-      );
-    }
-  }
+  final _authService = AuthService();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -42,12 +27,59 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  Future<void> _login() async {
+    print("Apelare funcție de login");
+    // Verifică dacă formularul este valid
+    print(_formKey.currentState?.validate());
+
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      print("Email: ${_emailController.text.trim()}");
+      print("Parola: ${_passwordController.text}");
+
+      try {
+        bool success = await _authService.login(
+          _emailController.text.trim(),
+          _passwordController.text,
+        );
+
+        print("Autentificare reușită: $success");
+
+        if (success) {
+          // Navigare către HomePage și înlocuirea stack-ului de navigare
+          AppRouter.navigateAndClearStack(context, '/home');
+        } else {
+          if (!mounted) return;
+          // Afișarea unui mesaj de eroare
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                  'Autentificare eșuată. Verificați datele și încercați din nou.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      } finally {
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Observă că nu folosim MainLayout aici pentru că
+    // probabil dorim un UI diferit pentru pagina de login
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24.0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -55,111 +87,55 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const Icon(
-                  Icons.car_repair,
-                  size: 100,
-                  color: Color(0xff36618e),
+                  Icons.lock,
+                  size: 80,
+                  color: Colors.blue,
                 ),
                 const SizedBox(height: 32),
-                const Text(
-                  'Pitstop Service',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const Text(
-                  'Bine ai venit!',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 32),
-                
-                TextFormField(
+                TextInput(
+                  label: 'Email',
+                  hint: 'Introduceți adresa de email',
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.email),
-                  ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Te rog introdu email-ul';
-                    }
-                    if (!value.contains('@')) {
-                      return 'Te rog introdu un email valid';
+                    if (value == null || !value.contains('@')) {
+                      return 'Introduceți o adresă de email validă';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 16),
-                
-                TextFormField(
+                PasswordInput(
+                  label: 'Parolă',
                   controller: _passwordController,
-                  obscureText: _obscurePassword,
-                  decoration: InputDecoration(
-                    labelText: 'Parola',
-                    border: const OutlineInputBorder(),
-                    prefixIcon: const Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword ? Icons.visibility : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _obscurePassword = !_obscurePassword;
-                        });
-                      },
-                    ),
-                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Te rog introdu parola';
-                    }
-                    if (value.length < 6) {
-                      return 'Parola trebuie să aibă cel puțin 6 caractere';
+                      return 'Introduceți parola';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 24),
-                
                 ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      login();
-                    }
-                  },
+                  onPressed: _isLoading ? null : _login,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).cardColor,
-                    side: BorderSide(
-                      color: Theme.of(context).colorScheme.onSurface,
-                      width: 1,
-                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
-                  child: const Text(
-                    'Autentificare',
-                    style: TextStyle(fontSize: 16),
-                  ),
+                  child: _isLoading
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : const Text('Autentificare',
+                          style: TextStyle(fontSize: 16)),
                 ),
                 const SizedBox(height: 16),
-                
                 TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/register');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RegisterScreen()),
+                    );
                   },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).cardColor,
-                      side: BorderSide(
-                        color: Theme.of(context).colorScheme.onSurface,
-                        width: 0.4,
-                      ),
-                    ),
-                  child: const Text('Inregistrare'),
+                  child: const Text('Nu ai cont? Înregistrează-te'),
                 ),
               ],
             ),
